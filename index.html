@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoticeBoard | Campus Notices</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .html-button {
+            margin-left: 8px;
+            padding: 6px 10px;
+            border: 1px solid #b9d0cc;
+            border-radius: 8px;
+            color: #225e57;
+            background: #ffffff;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .html-message {
+            display: block;
+            margin-top: 4px;
+            color: #667085;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrap">
+        <header class="page-header">
+            <div class="top-row">
+                <div class="brand">
+                    <div class="logo" style="letter-spacing: 1px;">NB</div>
+                    <div>
+                        <h1>NoticeBoard</h1>
+                        <p>Campus notices and circulars, in one place</p>
+                    </div>
+                </div>
+
+                <div class="stats" id="stats"></div>
+            </div>
+
+            <div class="urgent-banner" id="urgentBanner" hidden></div>
+        </header>
+
+        <section class="controls" aria-label="Notice controls">
+            <label class="search-box">
+                <span>⌕</span>
+                <input id="searchInput" type="search" placeholder="Search a notice or circular number">
+            </label>
+
+            <div class="control-row">
+                <div class="category-list" id="categoryList" aria-label="Notice categories"></div>
+
+                <div class="button-list">
+                    <label class="sort-label" for="sortSelect">Sort:</label>
+                    <label class="sort-label" for="departmentFilter">Department:</label>
+                    <select id="departmentFilter">
+                    <option value="All">All departments</option>
+                    </select>
+                    <select id="sortSelect">
+                        <option value="newest">Newest first</option>
+                        <option value="priority">Priority first</option>
+                        <option value="oldest">Oldest first</option>
+                    </select>
+                    <button class="small-button" id="savedButton" type="button">♡ Saved</button>
+                    <button class="small-button" id="adminButton" type="button">Admin </button>
+                    <button class="primary-button" id="newNoticeButton" type="button" hidden>+ New notice</button>
+                    <button class="small-button" id="themeButton" type="button" aria-pressed="false">dark mode</button>
+                </div>
+            </div>
+        </section>
+
+        
+        <p class="result-line" id="resultLine"></p>
+        <main class="notice-grid" id="noticeGrid" aria-label="Notice list"></main>
+
+        <footer class="page-footer">
+            NoticeBoard classroom project
+            <button class="html-button" id="htmlButton" type="button" onclick="showMessage()">About this</button>
+            <span class="html-message" id="htmlMessage" role="status"></span>
+        </footer>
+    </div>
+
+    <div class="modal-backdrop" id="modalBackdrop" hidden>
+        <section class="modal" role="dialog" aria-modal="true" aria-label="Notice details">
+            <div id="modalContent"></div>
+        </section>
+    </div>
+
+    <div class="toast" id="toast" role="status" hidden></div>
+    <section class="campus-section" aria-labelledby="campusTitle">
+        <h2 id="campusTitle">Campus details</h2>
+        <p class="campus-intro">
+            This section can be filled later by the college.
+        </p>
+
+        <div class="campus-grid">
+            <article class="campus-card">
+                <h3><b>Main Auditorium</b></h3>
+                <p>Shows, plays, guest talks and music performances.</p>
+                <p class="campus-location">Location: Add your auditorium building or block.</p>
+            </article>
+
+            <article class="campus-card">
+                <h3><b>Student Activity Center</b></h3>
+                <p>Club meetings, rehearsals, workshops and student activities.</p>
+                <p class="campus-location">Location: Student center location not added yet.</p>
+            </article>
+
+            <article class="campus-card">
+                <h3><b>Campus Grounds</b></h3>
+                <p>Festivals, outdoor events and student gatherings.</p>
+                <p class="campus-location">Location: Venue not added yet.</p>
+            </article>
+        </div>
+
+        <p class="campus-note">
+            <mark><b>This is just a sample placeholder. We can add campus details later.</b></mark>
+        </p>
+    </section>
+
+    <script src="script.js"></script>
+
+    <script>
+        function showMessage() {
+            var message = document.getElementById("htmlMessage");
+
+            if (message.textContent === "") {
+                message.textContent = "This page is a reference created by our group for the CSE 326 project. We can add campus details later.";
+            } else {
+                message.textContent = "";
+            }
+        }
+    </script>
+</body>
+</html>
