@@ -50,5 +50,5 @@ The objective of NoticeBoard is to simplify academic communication by providing 
 ## 👨‍💻👨‍💻 Team Members
 *   Aditya Sagar
 *   Dharamveer Kumar
-*   Utkarsh Shukla
+*   Utkarsh Shuklaa
 *   Mannat Bhadwal
