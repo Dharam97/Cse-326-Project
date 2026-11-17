@@ -48,7 +48,8 @@ The objective of NoticeBoard is to simplify academic communication by providing 
 - Responsive mobile experience.
 
 ## 👨‍💻👨‍💻 Team Members
+*   Mannat Bhadwal
 *   Aditya Sagar
 *   Dharamveer Kumar
-*   Utkarsh Shuklaa
-*   Mannat Bhadwal
+*   Utkarsh Shukla
+  
