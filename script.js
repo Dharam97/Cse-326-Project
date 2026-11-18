@@ -1,3 +1,4 @@
+
 var defaultNotices = [
     {
         id: "notice-1",
@@ -580,20 +581,7 @@ function openNotice(noticeId) {
     facts.textContent = "Circular: " + notice.circularNo + " · Department: " + notice.department + " · Date: " + formatDate(notice.date);
     modalContent.appendChild(facts);
 
-    if (notice.attachment) {
-        addTextElement(modalContent, "p", "warning-box", notice.attachment + ". No real file is attached in this browser.");
-    }
-
-    if (notice.attachmentName && notice.attachmentData) {
-        var attachmentLink = document.createElement("a");
-        attachmentLink.className = "attachment-link";
-        attachmentLink.href = notice.attachmentData;
-        attachmentLink.download = notice.attachmentName;
-        attachmentLink.textContent = "Download attachment: " + notice.attachmentName;
-        modalContent.appendChild(attachmentLink);
-        addTextElement(modalContent, "p", "attachment-note", "This file is saved only in this browser. It is not uploaded to a college server.");
-    }
-
+   
     if (adminMode) {
         var actionRow = document.createElement("div");
         actionRow.className = "modal-actions";
@@ -630,8 +618,7 @@ function openAddForm() {
         "<label>Date<input id=\"formDate\" type=\"date\" required></label>" +
         "<label class=\"check-row\"><input id=\"formPriority\" type=\"checkbox\"> Mark as important</label>" +
         "<label class=\"wide-field\">Notice text<textarea id=\"formBody\" required maxlength=\"500\"></textarea></label>" +
-        "<label class=\"wide-field\">Optional attachment (up to 500 KB)<input id=\"formAttachment\" type=\"file\"></label>" +
-        "<p class=\"attachment-note wide-field\">The selected file stays in this browser. It will not be uploaded or shared with other students.</p>" +
+        
         "<div class=\"wide-field form-actions\"><button class=\"small-button\" id=\"cancelForm\" type=\"button\">Cancel</button><button class=\"primary-button\" type=\"submit\">Save notice</button></div>" +
         "</form>";
 
@@ -649,6 +636,8 @@ function openAddForm() {
 }
 
 function addNewNotice() {
+  
+
     var title = document.getElementById("formTitle").value.trim();
     var circularNo = document.getElementById("formNumber").value.trim();
     var category = document.getElementById("formCategory").value;
@@ -656,31 +645,35 @@ function addNewNotice() {
     var date = document.getElementById("formDate").value;
     var body = document.getElementById("formBody").value.trim();
     var priority = document.getElementById("formPriority").checked;
-    var selectedFile = document.getElementById("formAttachment").files[0];
 
     if (title === "" || circularNo === "" || department === "" || date === "" || body === "") {
-        showToast("Please fill in each required field");
+        showToast("Please fill in every required field");
         return;
     }
 
-    if (selectedFile && selectedFile.size > 500 * 1024) {
-        showToast("Please choose a file smaller than 500 KB");
+    var newNotice = {
+        id: "notice-" + new Date().getTime(),
+        circularNo: circularNo,
+        category: category,
+        title: title,
+        body: body,
+        department: department,
+        date: date,
+        priority: priority
+    };
+
+    notices.push(newNotice);
+
+    if (saveNotices() === false) {
+        notices.pop();
         return;
     }
 
-    if (selectedFile) {
-        var reader = new FileReader();
-        reader.onload = function () {
-            saveNewNotice(title, circularNo, category, department, date, body, priority, selectedFile.name, reader.result);
-        };
-        reader.onerror = function () {
-            showToast("The file could not be read. Please try another file");
-        };
-        reader.readAsDataURL(selectedFile);
-    } else {
-        saveNewNotice(title, circularNo, category, department, date, body, priority, "", "");
-    }
+    closeModal();
+    renderPage();
+    showToast("Notice added successfully");
 }
+
 
 function saveNewNotice(title, circularNo, category, department, date, body, priority, attachmentName, attachmentData) {
     var newNotice = {
